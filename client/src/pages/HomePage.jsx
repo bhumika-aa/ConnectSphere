@@ -23,7 +23,7 @@ function HomePage() {
     try {
 
       const response = await fetch(
-        "http://localhost:5000/api/posts"
+        "https://connectsphere-api.onrender.com/api/posts"
       );
 
       const data = await response.json();
@@ -46,7 +46,7 @@ function HomePage() {
     try {
 
       await fetch(
-        `http://localhost:5000/api/posts/${postId}/like`,
+        `https://connectsphere-api.onrender.com/api/posts/${postId}/like`,
         {
           method: "PUT",
 
@@ -77,7 +77,7 @@ function HomePage() {
     try {
 
       await fetch(
-        `http://localhost:5000/api/posts/${postId}/comment`,
+        `https://connectsphere-api.onrender.com/api/posts/${postId}/comment`,
         {
           method: "POST",
 
@@ -111,7 +111,7 @@ function HomePage() {
     try {
 
       await fetch(
-        `http://localhost:5000/api/posts/${postId}`,
+        `https://connectsphere-api.onrender.com/api/posts/${postId}`,
         {
           method: "DELETE",
 
@@ -138,7 +138,7 @@ function HomePage() {
     try {
 
       await fetch(
-        `http://localhost:5000/api/posts/${postId}`,
+        `https://connectsphere-api.onrender.com/api/posts/${postId}`,
         {
           method: "PUT",
 
@@ -192,7 +192,7 @@ function HomePage() {
       }
 
       const response = await fetch(
-        "http://localhost:5000/api/posts",
+        "https://connectsphere-api.onrender.com/api/posts",
         {
           method: "POST",
 

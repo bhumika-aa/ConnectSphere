@@ -30,7 +30,7 @@ function Navbar() {
       }
 
       const response = await fetch(
-        `http://localhost:5000/api/users/search/users?query=${query}`
+        `https://connectsphere-api.onrender.com/api/users/search/users?query=${query}`
       );
 
       const data = await response.json();

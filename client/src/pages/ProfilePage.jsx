@@ -34,7 +34,7 @@ function ProfilePage() {
     try {
 
       const response = await fetch(
-        `http://localhost:5000/api/users/${id || currentUser.id}`
+        `https://connectsphere-api.onrender.com/api/users/${id || currentUser.id}`
       );
 
       const data = await response.json();
@@ -53,7 +53,7 @@ function ProfilePage() {
     try {
 
       const response = await fetch(
-        "http://localhost:5000/api/posts"
+        "https://connectsphere-api.onrender.com/api/posts"
       );
 
       const data = await response.json();
@@ -79,7 +79,7 @@ function ProfilePage() {
 
       // UPDATE USER INFO
       const response = await fetch(
-        "http://localhost:5000/api/users/profile/update",
+        "https://connectsphere-api.onrender.com/api/users/profile/update",
         {
           method: "PUT",
 
@@ -109,7 +109,7 @@ function ProfilePage() {
         );
 
         await fetch(
-          "http://localhost:5000/api/users/profile/upload",
+          "https://connectsphere-api.onrender.com/api/users/profile/upload",
           {
             method: "POST",
 
@@ -127,7 +127,7 @@ function ProfilePage() {
 
       // GET LATEST USER DATA
       const updatedProfileResponse = await fetch(
-        `http://localhost:5000/api/users/${id || currentUser.id}`
+        `https://connectsphere-api.onrender.com/api/users/${id || currentUser.id}`
       );
 
       const latestUser =
@@ -169,7 +169,7 @@ function ProfilePage() {
     try {
 
       await fetch(
-        `http://localhost:5000/api/posts/${postId}/like`,
+        `https://connectsphere-api.onrender.com/api/posts/${postId}/like`,
         {
           method: "PUT",
 
@@ -201,7 +201,7 @@ function ProfilePage() {
     try {
 
       await fetch(
-        `http://localhost:5000/api/posts/${postId}/comment`,
+        `https://connectsphere-api.onrender.com/api/posts/${postId}/comment`,
         {
           method: "POST",
 
@@ -235,7 +235,7 @@ function ProfilePage() {
     try {
 
       await fetch(
-        `http://localhost:5000/api/posts/${postId}`,
+        `https://connectsphere-api.onrender.com/api/posts/${postId}`,
         {
           method: "DELETE",
 
@@ -262,7 +262,7 @@ function ProfilePage() {
     try {
 
       await fetch(
-        `http://localhost:5000/api/posts/${postId}`,
+        `https://connectsphere-api.onrender.com/api/posts/${postId}`,
         {
           method: "PUT",
 
