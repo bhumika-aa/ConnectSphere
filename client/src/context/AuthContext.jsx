@@ -31,12 +31,33 @@ export const AuthProvider = ({
       storedUser &&
       storedToken
     ) {
-
-      setUser(
-        JSON.parse(storedUser)
-      );
-
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
       setToken(storedToken);
+
+      // Fetch the latest user info from the server to keep it synced
+      const fetchLatestUser = async () => {
+        try {
+          const response = await fetch(
+            `https://connectsphere-api.onrender.com/api/users/${parsedUser._id || parsedUser.id}`
+          );
+          if (response.ok) {
+            const latestData = await response.json();
+            const updatedUser = {
+              ...parsedUser,
+              username: latestData.username,
+              profilePicture: latestData.profilePicture,
+              bio: latestData.bio,
+            };
+            localStorage.setItem("user", JSON.stringify(updatedUser));
+            setUser(updatedUser);
+          }
+        } catch (error) {
+          console.error("Failed to sync user profile on startup:", error);
+        }
+      };
+
+      fetchLatestUser();
     }
 
   }, []);
@@ -86,6 +107,7 @@ export const AuthProvider = ({
         token,
         login,
         logout,
+        setUser
       }}
     >
 

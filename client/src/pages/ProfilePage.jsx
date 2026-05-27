@@ -10,8 +10,9 @@ function ProfilePage() {
   const [commentText, setCommentText] = useState({});
   const [showComments, setShowComments] = useState({});
   const { id } = useParams();
-  const { user, token } = useAuth();
+  const { user, token, setUser } = useAuth();
   const currentUser = user;
+  const profileId = id || currentUser?.id || currentUser?._id;
 
   const [isEditing, setIsEditing] =
     useState(false);
@@ -30,11 +31,14 @@ function ProfilePage() {
 
   // FETCH USER PROFILE
   const fetchUserProfile = async () => {
+    if (!profileId || profileId === "undefined") {
+      return;
+    }
 
     try {
 
       const response = await fetch(
-        `https://connectsphere-api.onrender.com/api/users/${id || currentUser.id}`
+        `https://connectsphere-api.onrender.com/api/users/${profileId}`
       );
 
       const data = await response.json();
@@ -49,6 +53,9 @@ function ProfilePage() {
 
   // FETCH USER POSTS
   const fetchUserPosts = async () => {
+    if (!profileId || profileId === "undefined") {
+      return;
+    }
 
     try {
 
@@ -60,7 +67,7 @@ function ProfilePage() {
 
       const filteredPosts = data.filter(
         (post) =>
-          post.author._id === (id || currentUser.id)
+          post.author._id === profileId
       );
 
       setUserPosts(filteredPosts);
@@ -127,7 +134,7 @@ function ProfilePage() {
 
       // GET LATEST USER DATA
       const updatedProfileResponse = await fetch(
-        `https://connectsphere-api.onrender.com/api/users/${id || currentUser.id}`
+        `https://connectsphere-api.onrender.com/api/users/${profileId}`
       );
 
       const latestUser =
@@ -143,6 +150,13 @@ function ProfilePage() {
             latestUser.profilePicture,
         })
       );
+
+      setUser({
+        ...currentUser,
+        username: latestUser.username,
+        profilePicture:
+          latestUser.profilePicture,
+      });
 
       setIsEditing(false);
 
@@ -293,7 +307,7 @@ function ProfilePage() {
     fetchUserProfile();
     fetchUserPosts();
 
-  }, [id]);
+  }, [profileId]);
 
   useEffect(() => {
 
@@ -341,25 +355,25 @@ function ProfilePage() {
             </div>
 
             {/* PROFILE INFO */}
-            <div className="flex-1">
+            <div className="flex-1 text-center md:text-left w-full">
 
               <h2 className="text-3xl font-bold text-gray-800">
                 {userData?.username}
               </h2>
 
-              <p className="text-gray-500 mt-2">
-                {userData?.bio || "No bio yet ✨"}
+              <p className="text-gray-500 mt-2 max-w-md mx-auto md:mx-0">
+                {userData?.bio || "No bio yet!"}
               </p>
 
               {/* STATS */}
-              <div className="flex gap-8 mt-6">
+              <div className="flex justify-center md:justify-start gap-8 mt-6">
 
                 <div>
                   <h3 className="font-bold text-xl">
                     {userPosts.length}
                   </h3>
 
-                  <p className="text-gray-500">
+                  <p className="text-gray-500 text-sm">
                     Posts
                   </p>
                 </div>
@@ -369,7 +383,7 @@ function ProfilePage() {
                     {userData?.followers?.length || 0}
                   </h3>
 
-                  <p className="text-gray-500">
+                  <p className="text-gray-500 text-sm">
                     Followers
                   </p>
                 </div>
@@ -379,7 +393,7 @@ function ProfilePage() {
                     {userData?.following?.length || 0}
                   </h3>
 
-                  <p className="text-gray-500">
+                  <p className="text-gray-500 text-sm">
                     Following
                   </p>
                 </div>
@@ -387,18 +401,19 @@ function ProfilePage() {
               </div>
 
               {/* BUTTON */}
-              {(!id || id === currentUser.id) && (
+              {profileId === currentUser?.id ||
+                profileId === currentUser?._id ? (
 
                 <button
                   onClick={() =>
                     setIsEditing(true)
                   }
-                  className="mt-6 bg-pink-500 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-pink-600 transition"
+                  className="mt-6 bg-pink-500 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-pink-600 transition w-full md:w-auto shadow-sm"
                 >
 
                   Edit Profile
 
-                </button>)}
+                </button>) : null}
 
             </div>
 

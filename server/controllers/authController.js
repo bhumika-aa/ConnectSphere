@@ -52,9 +52,10 @@ const registerUser = async (req, res) => {
     res.status(201).json({
       token,
       user: {
-        id: user._id,
+        _id: user._id,
         username: user.username,
         email: user.email,
+        profilePicture: user.profilePicture,
       },
     });
   } catch (error) {
@@ -111,9 +112,10 @@ const loginUser = async (req, res) => {
     res.status(200).json({
       token,
       user: {
-        id: user._id,
+        _id: user._id,
         username: user.username,
         email: user.email,
+        profilePicture: user.profilePicture,
       },
     });
 

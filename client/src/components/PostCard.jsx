@@ -26,7 +26,8 @@ function PostCard({
     : null;
 
   const isOwner =
-    currentUser?.id === post.author?._id;
+  currentUser?.id === post.author?._id ||
+  currentUser?._id === post.author?._id;
 
   const [isEditing, setIsEditing] =
     useState(false);
